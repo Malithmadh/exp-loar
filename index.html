@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>CCS Block Explorer</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="css/pagination.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-light navbar-expand-lg fixed-top justify-content-center" id="navbar-custom">
+            <a href="https://cloutcontracts.net" target="_blank" class="navbar-brand d-flex w-75 mr-auto">
+                <img src="https://cloutcontracts.net/assets/images/c-512x512.png" style="width:50px;height:50px"> 
+                <h2 class="explore">Explorer</h2>
+            </a>
+            
+        </nav>
+    </header>
+
+    <main role="main">
+        <section id="main">
+            <div class="container mt-1">
+                
+                <!--  -->
+                <div class="row align-items-stretch">
+                    <div class="c-dashboardInfo col-lg-2 col-md-6">
+
+                    </div>
+                    <div class="c-dashboardInfo col-lg-8 col-md-6">
+                        <div class="stats-card">
+                            <div class="token-info">
+                                <img src="https://cloutcontracts.net/assets/images/c-512x512.png" class="token-logo" />
+
+                                IOTX
+                            </div>
+
+                            <div class="price-info">
+                                <div class="price-container">
+                                    <span class="price" id="price">$0.00</span>
+
+                                    <span class="price-change">-0.47%</span>
+                                </div>
+                                <div style="max-height: 50px;">
+                                    <canvas id="line-chart"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="supply">
+                                <div class="price-info">
+                                    <div class="title">Total Suppy</div>
+                                    <div class="value"><span id="supply">--</span></div>
+                                    <div class="title">Circulating Suppy</div>
+                                    <div class="value"><span id="supply">--</span></div>
+                                </div>
+                                <!-- <div class="price-info">
+                                    <div class="title">Circulating Suppy</div>
+                                    <div class="value">123,456,788</div>
+                                </div> -->
+                            </div>
+
+                            <div class="volume">
+                                <div class="market-cap">
+                                    <img src="https://cloutcontracts.net/assets/images/c-512x512.png" class="token-logo" />
+
+                                    <span class="cap">$692,456,987.00</span>
+
+                                    <span class="title">
+                                        Market Cap
+                                    </span>
+                                </div>
+                                <div class="market-cap">
+                                    <img src="https://cloutcontracts.net/assets/images/c-512x512.png" class="token-logo" />
+
+                                    <span class="cap">$692,456,987.00</span>
+
+                                    <span class="title">
+                                        24H Vol
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="c-dashboardInfo col-lg-3 col-md-6">
+                        <div class="wrap">
+                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Price<svg
+                                    class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true"
+                                    role="presentation">
+                                    <path fill="none" d="M0 0h24v24H0z"></path>
+                                </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count" id="price"></span>
+                        </div>
+                    </div>
+                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                        <div class="wrap">
+                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Circulating
+                                Supply<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24"
+                                    aria-hidden="true" role="presentation">
+                                    <path fill="none" d="M0 0h24v24H0z"></path>
+                                </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count" id="supply">
+
+                            </span>
+                        </div>
+                    </div> -->
+                    <div class="c-dashboardInfo col-lg-2 col-md-6">
+
+                    </div>
+                </div>
+                <!-- div  close-->
+                <div class="row mt-3 align-items-stretch mb-4">
+                    <div class="col-sm-12 col-xs-12 col-md-2 col-lg-2">
+
+                    </div>
+                    <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                        <input type="text" class="form-control custom-search" placeholder="Search Here..." />
+                    </div>
+                    <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3">
+                        <button type="button" class="btn btn-success custom-button">
+                            Search
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                        <ul class="nav nav-tabs d-flex justify-content-center" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="testnet-tab" data-bs-toggle="tab" data-bs-target="#testnet"
+                                    type="button" role="tab" aria-controls="testnet" aria-selected="false">TEST
+                                    NET</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="mainnet-tab" data-bs-toggle="tab"
+                                    data-bs-target="#mainnet" type="button" role="tab" aria-controls="mainnet"
+                                    aria-selected="true">MAIN NET</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="theetcpeg-tab" data-bs-toggle="tab"
+                                    data-bs-target="#theetcpeg" type="button" role="tab" aria-controls="theetcpeg"
+                                    aria-selected="false">THE ETC
+                                    PEG</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="thebnbpeg-tab" data-bs-toggle="tab"
+                                    data-bs-target="#thebnbpeg" type="button" role="tab" aria-controls="thebnbpeg"
+                                    aria-selected="false">THE BNB
+                                    PEG</button>
+                            </li>
+                        </ul>
+
+                        <!-- Main Content -->
+                        <div class="tab-content" id="myTabContent">
+                            <!-- test net -->
+                            <div class="tab-pane fade" id="testnet" role="tabpanel" aria-labelledby="testnet-tab">
+                                <div class="row mt-5">
+                                    <div class="col-md-6 col-sm-6">
+                                        <button class="btn btn-success mb-3 token" id="testnet-token">Token </button>
+                                        <button class="btn btn-success mb-3 rollup" id="testnet-rollup">Rollup </button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12" id="card-row">
+                                        <div class="card">
+                                            <div class="card-content">
+                                                <div class="card-body">
+                                                    <div class="table-responsive-sm">
+                                                        <table class="table table-dark table-striped" id="test-token"
+                                                            style="width: 100%;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="text-left">Block Number</th>
+                                                                    <th class="text-left">Miner</th>
+                                                                    <th class="text-left">Gas Used</th>
+                                                                    <th class="text-left">Reward</th>
+                                                                    <th class="text-left">Time Stamp</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody id="test">
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <nav aria-label="Page navigation example">
+                                                        <ul class="pagination" id="numbers">
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end testnet -->
+
+                            <!-- mainnet -->
+                            <div class="tab-pane fade show active" id="mainnet" role="tabpanel"
+                                aria-labelledby="mainnet-tab">
+                                <div class="row mt-5">
+                                    <div class="col-md-6 col-sm-6">
+                                        <button class="btn btn-success mb-3 token" id="mainnet-token">Token </button>
+                                        <button class="btn btn-success mb-3 rollup" id="mainnet-rollup">Rollup </button>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12" id="mainnet-card">
+                                        <div class="card">
+                                            <div class="card-content">
+                                                <div class="card-body">
+                                                    <div class="table-responsive-sm">
+                                                        <table class="table table-dark table-striped" id="main-table"
+                                                            style="width: 100%;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="text-left">Block Number</th>
+                                                                    <th class="text-left">Miner</th>
+                                                                    <th class="text-left">Gas Used</th>
+                                                                    <th class="text-left">Reward</th>
+                                                                    <th class="text-left">Time Stamp</th>
+                                                                    <!-- <th>Transactions</th> -->
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody id="main-net-data">
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <nav aria-label="Page navigation">
+                                                        <ul class="pagination mainpagi" id="mainnet-pagi">
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- end mainnet -->
+
+                            <!-- the etc peg -->
+                            <div class="tab-pane fade" id="theetcpeg" role="tabpanel" aria-labelledby="theetcpeg-tab">
+
+                                <!-- buttons -->
+                                <div class="row mt-5">
+                                    <div class="col-md-6 col-sm-6">
+                                        <button class="btn btn-success mb-3 token" id="etcpeg-token">Token </button>
+                                        <button class="btn btn-success mb-3 rollup" id="etcpeg-rollup">Rollup </button>
+                                        <button class="btn btn-success mb-3 lock" id="etcpeg-lock">Lock </button>
+                                    </div>
+                                </div>
+                                <!-- end of buttons -->
+
+                                <!-- data card -->
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12" id="etcpeg-card">
+                                        <div class="card">
+                                            <div class="card-content">
+                                                <div class="card-body">
+                                                    <div class="table-responsive-sm">
+                                                        <table class="table table-dark table-striped" id="peg-table"
+                                                            style="width:100%;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="text-left">Block Number</th>
+                                                                    <th class="text-left">Miner</th>
+                                                                    <th class="text-left">Gas Used</th>
+                                                                    <th class="text-left">Reward</th>
+                                                                    <th class="text-left">Time Stamp</th>
+                                                                    <!-- <th>Transactions</th> -->
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody id="peg-data">
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <nav aria-label="Page navigation">
+                                                        <ul class="pagination etcpagi" id="etc-pagi">
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end of data card -->
+                            </div>
+
+                            <!-- end the etc peg -->
+
+                            <!-- start the bnb peg -->
+                            <div class="tab-pane fade" id="thebnbpeg" role="tabpanel" aria-labelledby="thebnbpeg-tab">
+                                <!-- search -->
+
+                                <!-- search end -->
+
+                                <!-- buttons -->
+                                <div class="row mt-5">
+                                    <div class="col-md-6 col-sm-6">
+                                        <button class="btn btn-success mb-3 token" id="bnbpeg-token">Token </button>
+                                        <button class="btn btn-success mb-3 rollup" id="bnbpeg-rollup">Rollup </button>
+                                        <button class="btn btn-success mb-3 lock" id="bnbpeg-lock">Lock </button>
+                                    </div>
+                                </div>
+                                <!-- end of buttons -->
+
+                                <!-- data card -->
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12" id="bnbpeg-card">
+                                        <div class="card">
+                                            <div class="card-content">
+                                                <div class="card-body">
+                                                    <div class="table-responsive-sm">
+                                                        <table class="table table-dark table-striped" id="bnb-table"
+                                                            style="width: 100%;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="text-left">Block Number</th>
+                                                                    <th class="text-left">Miner</th>
+                                                                    <th class="text-left">Gas Used</th>
+                                                                    <th class="text-left">Reward</th>
+                                                                    <th class="text-left">Time Stamp</th>
+                                                                    <!-- <th>Transactions</th> -->
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody id="peg-data">
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <nav aria-label="Page navigation">
+                                                        <ul class="pagination bnbpagi" id="bnb-pagi">
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end of data card -->
+                            </div>
+
+                            <!-- end the bnb peg -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+
+    <footer>
+        <div class="container">
+            <div class="col-sm-12">
+                <p>Statistics are powered by APIs from Etherscan, Blockscout, Bscscan, Infura and CoinGecko respectively. This isn't
+                    investment advice. We have no direct relationship w/ the API providers utilized in this application. Also, some 
+                    data may or may not be in realtime depending on latency. Data provided is "as-is". CloutContracts is to be looked 
+                    at as a utility, and this is its official block explorer.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js">
+    </script>
+    <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script> -->
+
+    <script src="js/jquery.dynatable.js"></script>
+
+    <script src="js/testnet.js"></script>
+    <script src="js/mainnet.js"></script>
+    <script src="js/bnbpeg.js"></script>
+    <script src="js/etcpeg.js"></script>
+    <script src="js/paginationLogic.js"></script>
+    
+    
+    <script>
+        var tokens = [];
+        var searchToken = '';
+
+        var mainNetTab = 'token';
+        var testNetTab = 'token';
+        var etcTab = 'token';
+        var bnbTab = 'token';
+
+        $(document).ready(function () {
+
+            getSupply();
+            getPrice();
+            // $("#test-token").on("draw.dt", function () {
+            //     $(this).find(".dataTables_empty").parents('tbody').empty();
+            // }).DataTable({
+            //     "searching": false,
+            //     "info": false,
+            //     "bLengthChange": false,
+            //     "pageLength": 25,
+            //     "bSortable" : false,
+            //     "ordering": false,
+            //     "autoWidth": true,
+            //     "paging": false,
+            //     "pagingType": "full_numbers"
+            // });
+
+
+            // $("#main-table").on("draw.dt", function () {
+            //     $(this).find(".dataTables_empty").parents('tbody').empty();
+            // }).DataTable({
+            //     "searching": false,
+            //     "info": false,
+            //     "bLengthChange": false,
+            //     "pageLength": 25,
+            //     "bSortable": false,
+            //     "ordering": false,
+            //     "autoWidth": false,
+            //     "paging": true
+            // });
+
+            // $("#peg-table").on("draw.dt", function () {
+            //     $(this).find(".dataTables_empty").parents('tbody').empty();
+            // }).DataTable({
+            //     "searching": false,
+            //     "info": false,
+            //     "bLengthChange": false,
+            //     "pageLength": 25,
+            //     "bSortable": false,
+            //     "ordering": false,
+            //     "autoWidth": false,
+            //     "paging": true
+            // });
+
+            // $("#bnb-table").on("draw.dt", function () {
+            //     $(this).find(".dataTables_empty").parents('tbody').empty();
+            // }).DataTable({
+            //     "searching": false,
+            //     "info": false,
+            //     "bLengthChange": false,
+            //     "pageLength": 25,
+            //     "bSortable": false,
+            //     "ordering": false,
+            //     "autoWidth": false,
+            //     "paging": true
+            // });
+
+
+
+            let element_id = '#card-row'
+            let api_url =
+                "https://api-ropsten.etherscan.io/api?module=account&action=txlist&address=0x5D0778eDE3867c69590FE611fCF8e233887CB655&startblock=0&endblock=99999999&sort=asc&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS"
+
+            testNetToken(api_url, element_id);
+
+            let element_id_main = '#mainnet-card';
+            let api_url_main =
+                "https://api.etherscan.io/api?module=account&action=txlist&address=0x1da4858ad385cc377165a298cc2ce3fce0c5fd31&startblock=0&endblock=99999999&sort=asc&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS"
+
+            mainNetToken(api_url_main, element_id_main)
+
+
+            let element_id_bnb = '#bnbpeg-card';
+            let api_url_bnb =
+                "https://api.bscscan.com/api?module=account&action=txlist&address=0x3e3B357061103DC040759aC7DceEaba9901043aD&startblock=1&endblock=99999999&sort=asc&apikey=TH6XW2FQY1I8CDFWVD6YD9XCRYHYTUQ9BD"
+
+            bnbPegToken(api_url_bnb, element_id_bnb);
+
+
+
+            let element_id_etc = '#etcpeg-card';
+            let api_url_etc_peg =
+                "https://blockscout.com/etc/mainnet/api?module=account&action=txlist&address=0x9186ff77866DfD1007429F552e48C6d1A927297A"
+
+            etcPegToken(api_url_etc_peg, element_id_etc)
+
+        });
+
+        function getSupply() {
+            $.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=cloutcontracts",
+                function (response) {
+                    console.log(response[0].circulating_supply);
+                    $('#supply').text(response[0].circulating_supply);
+                });
+        }
+
+        function getPrice() {
+            $.get("https://api.coingecko.com/api/v3/simple/price?ids=cloutcontracts&vs_currencies=usd",
+                function (response) {
+                    var price = response.cloutcontracts.usd;
+                    $('#price').text('$'+price);
+
+                });
+        }
+
+        // search button
+        $('.custom-button').click(function () {
+            var hashNumber = $('.custom-search').val();
+
+            searchToken = hashNumber;
+
+            if (mainNetTab == 'rollup') {
+                $('#mainnet-rollup').trigger('click');
+            } else if (mainNetTab == 'token') {
+                $('#mainnet-token').trigger('click');
+            }
+
+            if (testNetTab == 'rollup') {
+                $('#testnet-rollup').trigger('click');
+            } else if (testNetTab == 'token') {
+                $('#testnet-token').trigger('click');
+            }
+
+            if (etcTab == 'lock') {
+                $('#etcpeg-lock').trigger('click');
+            }
+
+            if (etcTab == 'rollup') {
+                $('#etcpeg-rollup').trigger('click');
+            } else if (etcTab == 'token') {
+                $('#etcpeg-token').trigger('click');
+            }
+
+            if (bnbTab == 'lock') {
+                $('#bnbpeg-lock').trigger('click');
+            }
+
+            if (bnbTab == 'rollup') {
+                $('#bnbpeg-rollup').trigger('click');
+            } else if (bnbTab == 'token') {
+                $('#bnbpeg-token').trigger('click');
+
+            }
+        });
+    
+        $.get('https://api.coingecko.com/api/v3/coins/cloutcontracts/market_chart?vs_currency=USD&days=1', function (response) {
+            if (response.prices) {
+                var length = response.prices.length;
+
+                const DATA_COUNT = 10;
+                const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
+
+                const labels = [
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                ];
+
+                var chartData = [
+                    response.prices[length - 10][1],
+                    response.prices[length - 9][1],
+                    response.prices[length - 8][1],
+                    response.prices[length - 7][1],
+                    response.prices[length - 6][1],
+                    response.prices[length - 5][1],
+                    response.prices[length - 4][1],
+                    response.prices[length - 3][1],
+                    response.prices[length - 2][1],
+                    response.prices[length - 1][1],
+                ];
+
+                const data = {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'CloutContracts',
+                            fill: false,
+                            backgroundColor: '#5bdfe5',
+                            borderColor: '#5bdfe5',
+                            data: chartData,
+                        },
+                    ]
+                };
+
+                const config = {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: false,
+                                text: 'Price Data'
+                            },
+                            legend: {
+                                display: false,
+                            },
+                        },
+                        interaction: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        elements: {
+                            point:{
+                                radius: 0
+                            }
+                        },
+                        scales: {
+                            x: {
+                                display: false,
+                                title: {
+                                    display: true,
+                                    text: 'Month'
+                                }
+                            },
+                            y: {
+                                display: false,
+                                title: {
+                                    display: true,
+                                    text: 'Value'
+                                }
+                            }
+                        }
+                    },
+                };
+
+                new Chart(document.getElementById("line-chart"), config);
+            }
+        });
+    </script>
+    
+    <script>
+        var icon = document.getElementById("icon");
+        
+        icon.onclick = function(){
+            document.body.classList.toggle
+        }
+    </script>
+</body>
+
+</html>
