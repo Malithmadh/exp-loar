@@ -74,10 +74,10 @@ function mainNetToken(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    // +getBlock(value.blockNumber)+
+                                    +getBlock(value.blockNumber)+
                                     '</td>'+
                                     '<td class="text-left block-reward">'
-                                        // +date.toLocaleTimeString()+
+                                        +date.toLocaleTimeString()+
                                     '</td>'+
                                 '</tr>';
                     }
@@ -120,7 +120,7 @@ function mainNetRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    // +getBlock(value.blockNumber)+
+                                    +getBlock(value.blockNumber)+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -139,7 +139,7 @@ function mainNetRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    // +getBlock(value.blockNumber)+
+                                    +getBlock(value.blockNumber)+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -161,27 +161,29 @@ function mainNetRollup(api_url, element_id) {
 }
 
 
-// function getBlock(number){
+function getBlock(number){
+
+    console.log("Get block reward")
     
-//     var block_number = number;
-//     var apiUrl = "https://api.etherscan.io/api?module=block&action=getblockreward&blockno="+number+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
-//     var block_rewards = 0;
+    var block_number = number;
+    var apiUrl = "https://api.etherscan.io/api?module=block&action=getblockreward&blockno="+number+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
+    var block_rewards = 0;
     
-//     $.ajax({
-//         url: apiUrl,
-//         type: "POST",
-//         async: false, // set to false so order of operations is correct
-//         data: {block_number : block_number},
-//         success: function(data){
-//         if(data.status){
-//             block_rewards = data.result.blockReward
-//         }
-//      }
-//    });
-    
-//      var num = parseFloat(block_rewards);
-//      return num/1000000000000000000;
-// }
+    $.ajax({
+        url: apiUrl,
+        type: "GET",
+        async: true, // set to false so order of operations is correct
+        data: {block_number : block_number},
+        success: function(data){
+        if(data.status){
+            block_rewards = data.result.blockReward
+
+            var num = parseFloat(block_rewards);
+            return num/1000000000000000000;
+        }
+     }
+   });
+}
 
 
 function paginationM(mainrow){
