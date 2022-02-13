@@ -296,3 +296,13 @@ tr{
     margin-top: 10px;
     /* margin-bottom: 10px; */
 }
+
+.navbar-light .navbar-nav .nav-link{
+    color: var(--color-white);
+}
+
+#sun{
+    width: 30px;
+    cursor: pointer;
+    margin-left: 10px;
+}
