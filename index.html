@@ -57,54 +57,61 @@
                     </div>
                     <div class="c-dashboardInfo col-lg-8 col-md-6">
                         <div class="stats-card">
-                            <div class="token-info">
-                                <img src="https://cloutcontracts.net/assets/images/c-512x512.png" class="token-logo" />
-
-                                IOTX
-                            </div>
-
-                            <div class="price-info">
-                                <div class="price-container">
-                                    <span class="price" id="price">$0.00</span>
-
-                                    <span class="price-change">-0.47%</span>
+                            <div class="row">
+                                <div class="col-lg-2" style="display: flex; align-items: center;">
+                                    <div class="token-info">
+                                        <img src="https://cloutcontracts.net/assets/images/c-512x512.png" class="token-logo" />
+        
+                                        IOTX
+                                    </div>
                                 </div>
-                                <div style="max-height: 50px;">
-                                    <canvas id="line-chart"></canvas>
-                                </div>
-                            </div>
-
-                            <div class="supply">
-                                <div class="price-info">
-                                    <div class="title">Total Suppy</div>
-                                    <div class="value"><span id="supply">--</span></div>
-                                    <div class="title">Circulating Suppy</div>
-                                    <div class="value"><span id="supply">--</span></div>
-                                </div>
-                                <!-- <div class="price-info">
-                                    <div class="title">Circulating Suppy</div>
-                                    <div class="value">123,456,788</div>
-                                </div> -->
-                            </div>
-
-                            <div class="volume">
-                                <div class="market-cap">
-                                    <img src="https://cloutcontracts.net/assets/images/c-512x512.png" class="token-logo" />
-
-                                    <span class="cap">$692,456,987.00</span>
-
-                                    <span class="title">
-                                        Market Cap
-                                    </span>
-                                </div>
-                                <div class="market-cap">
-                                    <img src="https://cloutcontracts.net/assets/images/c-512x512.png" class="token-logo" />
-
-                                    <span class="cap">$692,456,987.00</span>
-
-                                    <span class="title">
-                                        24H Vol
-                                    </span>
+                                <div class="col-lg-9">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="price-container">
+                                                <span class="price" id="price">$0.00</span>
+            
+                                                <span class="price-change" id="pricechange">0.00%</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3" style="max-height: 50px;">
+                                            <canvas id="line-chart"></canvas>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="supply">
+                                                <div class="title">Total Suppy</div>
+                                                <div class="value"><span id="totalsupply">--</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="supply">
+                                                <div class="title">Circulating Suppy</div>
+                                                <div class="value"><span id="supply">--</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="market-cap">
+                                                <span class="title">
+                                                    Market Cap
+                                                </span>
+            
+                                                <span class="cap" id="marketcap">--</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="market-cap">
+                                                <!-- <img src="https://cloutcontracts.net/assets/images/c-512x512.png" class="token-logo" /> -->
+            
+                                                <span class="title">
+                                                    24H Vol
+                                                </span>
+            
+                                                <span class="cap" id="vol">--</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -525,6 +532,16 @@
                 function (response) {
                     console.log(response[0].circulating_supply);
                     $('#supply').text(response[0].circulating_supply);
+                    $('#totalsupply').text(response[0].total_supply);
+                    $('#marketcap').text('$'+response[0].market_cap);
+                    $('#vol').text('$'+response[0].total_volume);
+                    $('#pricechange').text('$'+response[0].price_change_percentage_24h);
+
+                    if (parseFloat(response[0].price_change_percentage_24h) > 0) {
+                        $('#pricechange').css('color', 'green');
+                    } else {
+                        $('#pricechange').css('color', 'red');
+                    }
                 });
         }
 
