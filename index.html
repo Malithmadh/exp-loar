@@ -62,7 +62,7 @@
                                     <div class="token-info">
                                         <img src="https://cloutcontracts.net/assets/images/c-512x512.png" class="token-logo" />
         
-                                        IOTX
+                                        CCS
                                     </div>
                                 </div>
                                 <div class="col-lg-9">
@@ -531,10 +531,10 @@
             $.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=cloutcontracts",
                 function (response) {
                     console.log(response[0].circulating_supply);
-                    $('#supply').text(response[0].circulating_supply);
-                    $('#totalsupply').text(response[0].total_supply);
-                    $('#marketcap').text('$'+response[0].market_cap);
-                    $('#vol').text('$'+response[0].total_volume);
+                    $('#supply').text(parseFloat(response[0].circulating_supply).toLocaleString());
+                    $('#totalsupply').text(parseFloat(response[0].total_supply).toLocaleString());
+                    $('#marketcap').text('$'+parseFloat(response[0].market_cap).toLocaleString());
+                    $('#vol').text('$'+parseFloat(response[0].total_volume).toLocaleString());
                     $('#pricechange').text('$'+response[0].price_change_percentage_24h);
 
                     if (parseFloat(response[0].price_change_percentage_24h) > 0) {
