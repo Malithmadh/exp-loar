@@ -59,7 +59,7 @@ function bnbPegToken(api_url, element_id) {
                                     +value.gasUsed+
                                 '</td>'+
                                 '<td class="text-left">'
-                                // +getBlock(value.blockNumber)+
+                                +getBlockPegTokenNumber(value.blockNumber)+
                                 '</td>'+
                                 '<td class="text-left">'
                                     +date.toLocaleTimeString()+
@@ -78,7 +78,7 @@ function bnbPegToken(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    // +getBlock(value.blockNumber)+
+                                    +getBlockPegTokenNumber(value.blockNumber)+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -122,7 +122,7 @@ function bnbPegRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlock(value.blockNumber)+'BNB'+
+                                    +getBlockPegRollNumber(value.blockNumber)+'BNB'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -141,7 +141,7 @@ function bnbPegRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlock(value.blockNumber)+'BNB'+
+                                    +getBlockPegRollNumber(value.blockNumber)+'BNB'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -183,7 +183,7 @@ function bnbPegLock(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlock(value.blockNumber)+'BNB'+
+                                    +getBlockPegRollNumber(value.blockNumber)+'BNB'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -202,7 +202,7 @@ function bnbPegLock(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlock(value.blockNumber)+'BNB'+
+                                    +getBlockPegRollNumber(value.blockNumber)+'BNB'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -223,6 +223,83 @@ function bnbPegLock(api_url, element_id) {
             pagiSecondB(data.result.length);
         });
 }
+
+
+function getBlockPegTokenNumber(number){
+
+        //alert(number);
+        
+        var block_number = number;
+        var apiUrl = "https://api.bscscan.com/api?module=block&action=getblockreward&blockno="+number+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
+        var block_rewards = 0;
+        
+        $.ajax({
+            url: apiUrl,
+            type: "GET",
+            async: true, // set to false so order of operations is correct
+            data: {block_number : block_number},
+            success: function(data){
+            if(data.status){
+                console.log("data"+"block_number"+block_number+" "+data.result.blockReward);
+                block_rewards = data.result.blockReward
+    
+                var num = parseFloat(block_rewards);
+                return num/1000000000000000000;
+            }
+         }
+       });
+}
+
+function getBlockPegRollNumber(number){
+
+    console.log("Get block reward")
+        
+        var block_number = number;
+        var apiUrl = "https://api.bscscan.com/api?module=block&action=getblockreward&blockno="+number+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
+        var block_rewards = 0;
+        
+        $.ajax({
+            url: apiUrl,
+            type: "GET",
+            async: true, // set to false so order of operations is correct
+            data: {block_number : block_number},
+            success: function(data){
+            if(data.status){
+                console.log("data"+"block_number"+block_number+" "+data.result.blockReward);
+                block_rewards = data.result.blockReward
+    
+                var num = parseFloat(block_rewards);
+                return num/1000000000000000000;
+            }
+         }
+       });
+}
+
+function getBlockPegLockNumber(number){
+
+    console.log("Get block reward")
+        
+        var block_number = number;
+        var apiUrl = "https://api.bscscan.com/api?module=block&action=getblockreward&blockno="+number+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
+        var block_rewards = 0;
+        
+        $.ajax({
+            url: apiUrl,
+            type: "GET",
+            async: true, // set to false so order of operations is correct
+            data: {block_number : block_number},
+            success: function(data){
+            if(data.status){
+                console.log("data"+"block_number"+block_number+" "+data.result.blockReward);
+                block_rewards = data.result.blockReward
+    
+                var num = parseFloat(block_rewards);
+                return num/1000000000000000000;
+            }
+         }
+       });
+}
+
 
 function paginationB(rowcB){
    

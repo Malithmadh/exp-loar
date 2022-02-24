@@ -53,8 +53,8 @@ function etcPegToken(api_url, element_id) {
                                 '<td class="text-left">'
                                     +value.gasUsed+
                                 '</td>'+
-                                '<td class="text-left">'+
-                                    '3.5 ETH'+
+                                '<td class="text-left">'
+                                +getBlock(value.blockNumber)+
                                 '</td>'+
                                 '<td class="text-left">'
                                     +date.toLocaleTimeString()+
@@ -72,8 +72,8 @@ function etcPegToken(api_url, element_id) {
                                     '<td class="text-left">'
                                         +value.gasUsed+
                                     '</td>'+
-                                    '<td class="text-left">'+
-                                        '3.5 ETH'+
+                                    '<td class="text-left">'
+                                    +getBlockNumber(value.blockNumber)+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -117,8 +117,8 @@ function etcPegRollup(api_url, element_id) {
                                     '<td class="text-left">'+
                                         +value.gasUsed+
                                     '</td>'+
-                                    '<td class="text-left">'+
-                                        '3.5 ETC'+
+                                    '<td class="text-left">'
+                                    +getRollupBlockNumber(value.blockNumber)+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -137,7 +137,7 @@ function etcPegRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'+
-                                        '3.5 ETC'+
+                                    getRollupBlockNumber(value.blockNumber)+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -180,7 +180,7 @@ function etcPegLock(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'+
-                                        '3.5 ETC'+
+                                    getLockBlockNumber(value.blockNumber)+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -199,7 +199,7 @@ function etcPegLock(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'+
-                                        '3.5 ETC'+
+                                    getLockBlockNumber(value.blockNumber)+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -219,6 +219,92 @@ function etcPegLock(api_url, element_id) {
             }
             pagiSecondE(data.result.length);
         });
+}
+
+
+function getBlockNumber(number){
+
+    console.log("Get block reward")
+    
+    var block_number = number;
+    var apiUrl = "https://blockscout.com/etc/mainnet/api?module=block&action=getblockreward&blockno="+number+"";
+    
+    var block_rewards = 0;
+    
+    $.ajax({
+        url: apiUrl,
+        type: "GET",
+        async: true, // set to false so order of operations is correct
+        data: {block_number : block_number},
+        success: function(data){
+        if(data.status){
+            
+            console.log("etcpeg" + data.result.blockReward);
+            block_rewards = data.result.blockReward
+
+            var num = parseFloat(block_rewards);
+            block_rewards = num/1000000000000000000;
+        }
+        
+        return block_rewards;
+     }
+   });
+}
+
+
+function getRollupBlockNumber(number){
+
+    var block_number = number;
+    var apiUrl = "https://blockscout.com/etc/mainnet/api?module=block&action=getblockreward&blockno="+number+"";
+    
+    var block_rewards = 0;
+    
+    $.ajax({
+        url: apiUrl,
+        type: "GET",
+        async: true, // set to false so order of operations is correct
+        data: {block_number : block_number},
+        success: function(data){
+        if(data.status){
+            
+            console.log("etcpeg" + data.result.blockReward);
+            block_rewards = data.result.blockReward
+
+            var num = parseFloat(block_rewards);
+            block_rewards = num/1000000000000000000;
+        }
+        
+        return block_rewards;
+     }
+   });
+}
+
+
+function getLockBlockNumber(number){
+
+    var block_number = number;
+    var apiUrl = "https://blockscout.com/etc/mainnet/api?module=block&action=getblockreward&blockno="+number+"";
+    
+    var block_rewards = 0;
+    
+    $.ajax({
+        url: apiUrl,
+        type: "GET",
+        async: true, // set to false so order of operations is correct
+        data: {block_number : block_number},
+        success: function(data){
+        if(data.status){
+            
+            console.log("etcpeg" + data.result.blockReward);
+            block_rewards = data.result.blockReward
+
+            var num = parseFloat(block_rewards);
+            block_rewards = num/1000000000000000000;
+        }
+        
+        return block_rewards;
+     }
+   });
 }
 
 function paginationE(rowcE){

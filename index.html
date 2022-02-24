@@ -33,14 +33,31 @@
             
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>
+                    <li class="nav-item dropdown">
+                        <a href="https://cloutcontracts.net/" target="_blank" class="nav-link">Home</a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Networks</a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Test Net</a>
+                            <a href="#" class="dropdown-item">Main Net</a>
+                            <a href="#" class="dropdown-item">The ETC Peg</a>
+                            <a href="#" class="dropdown-item">The BNB Peg</a>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Follow Us</a>
+                        <div class="dropdown-menu">
+                            <a href="https://www.minds.com/CloutContracts" target="_blank" class="dropdown-item">Minds</a>
+                            <a href="https://steemit.com/@cloutcontracts" target="_blank" class="dropdown-item">SteemIt</a>
+                            <a href="https://bitclout.com/u/CloutContracts" target="_blank" class="dropdown-item">BitClout</a>
+                            <a href="https://peepeth.com/CloutContracts" target="_blank" class="dropdown-item">Peepeth</a>
+                        </div>
+                    </li>
                 </ul>
-                <img src="https://cdn-icons.flaticon.com/png/512/5043/premium/5043094.png?token=exp=1644739157~hmac=a78333a8b06626b32f09d2defef382b0" id="sun">
+                <img src="moon.png" id="sun">
               </div>
             
         </nav>
@@ -695,11 +712,11 @@
             document.body.classList.toggle("dark-theme");
             if(document.body.classList.contains("dark-theme")){
             
-                icon.src = "https://cdn-icons.flaticon.com/png/512/5041/premium/5041890.png?token=exp=1644739205~hmac=c3665dd85f843c0a3d1ab7e9e25f91e5"
+                icon.src = "moon.png"
                 
             }else{
             
-                icon.src = "https://cdn-icons.flaticon.com/png/512/5043/premium/5043094.png?token=exp=1644739157~hmac=a78333a8b06626b32f09d2defef382b0"
+                icon.src = "light.png"
             }
                 
         }

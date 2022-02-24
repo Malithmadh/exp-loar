@@ -176,6 +176,7 @@ function getBlock(number){
         data: {block_number : block_number},
         success: function(data){
         if(data.status){
+            console.log("data"+"block_number"+block_number+" "+data.result.blockReward);
             block_rewards = data.result.blockReward
 
             var num = parseFloat(block_rewards);
