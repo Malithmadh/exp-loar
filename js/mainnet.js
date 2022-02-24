@@ -28,7 +28,7 @@ $('#mainnet-rollup').click(function () {
 
 // mainnet 
 function mainNetToken(api_url, element_id) {
-
+    var blockRewardMainnetToken = 0;
     console.log('Search Term', searchToken);
     
     $.get(api_url,
@@ -40,7 +40,24 @@ function mainNetToken(api_url, element_id) {
                 console.log(block_rewards);
                 $.each(data.result, function (index, value) {
                     const date = new Date(value.timeStamp * 1000);
+                    var apiUrl = "https://api.etherscan.io/api?module=block&action=getblockreward&blockno="+value.blockNumber+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
+                    blockRewardMainnetToken = 0;
                     
+                    $.ajax({
+                        url: apiUrl,
+                        type: "GET",
+                        async: false, // set to false so order of operations is correct
+                        data: {block_number : value.blockNumber},
+                        success: function(data){
+                        if(data.status){
+                            
+                            var block_rewards = data.result.blockReward
+                
+                            var num = parseFloat(block_rewards);
+                            blockRewardMainnetToken = num/1000000000000000000;
+                        }
+                     }
+                   });
                     if (searchToken != '') {
                         if (searchToken == value.hash.toString()) {
                             
@@ -55,7 +72,7 @@ function mainNetToken(api_url, element_id) {
                                     +value.gasUsed+
                                 '</td>'+
                                 '<td class="text-left">'
-                                    +getBlock(value.blockNumber)+
+                                    +blockRewardMainnetToken+
                                 '</td>'+
                                 '<td class="text-left">'
                                     +date.toLocaleTimeString()+
@@ -74,7 +91,7 @@ function mainNetToken(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlock(value.blockNumber)+
+                                    +blockRewardMainnetToken+
                                     '</td>'+
                                     '<td class="text-left block-reward">'
                                         +date.toLocaleTimeString()+
@@ -99,14 +116,32 @@ function mainNetToken(api_url, element_id) {
 
 // roll ups // mainnet 
 function mainNetRollup(api_url, element_id) {
-
+    var blockRewardMainnetRollup = 0;
+    
     $.get(api_url,
         function (data) {
             if (data.status) {
                 var html = ''
                 $.each(data.result, function (index, value) {
                     const date = new Date(value.timeStamp * 1000);
-
+                    var apiUrl = "https://api.etherscan.io/api?module=block&action=getblockreward&blockno="+value.blockNumber+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
+                    blockRewardMainnetRollup = 0;
+                    
+                    $.ajax({
+                        url: apiUrl,
+                        type: "GET",
+                        async: false, // set to false so order of operations is correct
+                        data: {block_number : value.blockNumber},
+                        success: function(data){
+                        if(data.status){
+                            
+                            var block_rewards = data.result.blockReward
+                
+                            var num = parseFloat(block_rewards);
+                            blockRewardMainnetRollup = num/1000000000000000000;
+                        }
+                     }
+                   });
                     if (searchToken != '') {
                         if (searchToken == value.hash.toString()) {
                             html += '<tr>'+
@@ -120,7 +155,7 @@ function mainNetRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlock(value.blockNumber)+
+                                    +blockRewardMainnetRollup+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -139,7 +174,7 @@ function mainNetRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlock(value.blockNumber)+
+                                    +blockRewardMainnetRollup+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+

@@ -160,13 +160,35 @@ function etcPegRollup(api_url, element_id) {
 }
 
 function etcPegLock(api_url, element_id) {
-    
+    var blockReward = 0;
     $.get(api_url,
         function (data) {
             if (data.status) {
                 var html = ''
                 $.each(data.result, function (index, value) {
                     const date = new Date(value.timeStamp * 1000);
+                    
+                    var apiUrl = "https://blockscout.com/etc/mainnet/api?module=block&action=getblockreward&blockno="+value.blockNumber+"";
+                    
+                    blockReward = 0;
+                    
+                    $.ajax({
+                        url: apiUrl,
+                        type: "GET",
+                        async: false, // set to false so order of operations is correct
+                        data: {block_number : value.number},
+                        success: function(data){
+                        if(data.status){
+                            console.log(data);
+                            var block_rewards = data.result.blockReward
+                
+                            var num = parseFloat(block_rewards);
+                            blockReward = num/1000000000000000000;
+                        }
+                        
+                     }
+                   });
+                    
                     if (searchToken != '') {
                         if (searchToken == value.hash.toString()) {
                             html += '<tr>'+
@@ -199,7 +221,7 @@ function etcPegLock(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'+
-                                    getLockBlockNumber(value.blockNumber)+
+                                    blockReward+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
