@@ -35,12 +35,38 @@ $('#etcpeg-lock').click(function () {
 
 // etc peg token
 function etcPegToken(api_url, element_id) {
+    
+    var etcPegToken = 0;
+    
     $.get(api_url,
         function (data) {
             if (data.status) {
                 var html = ''
                 $.each(data.result, function (index, value) {
                     const date = new Date(value.timeStamp * 1000);
+                    
+                    var apiUrl = "https://blockscout.com/etc/mainnet/api?module=block&action=getblockreward&blockno="+value.blockNumber+"";
+                    
+                    etcPegToken = 0;
+                    
+                    $.ajax({
+                        url: apiUrl,
+                        type: "GET",
+                        async: false, // set to false so order of operations is correct
+                        data: {block_number : value.number},
+                        success: function(data){
+                        if(data.status){
+                            console.log(data);
+                            var block_rewards = data.result.blockReward
+                
+                            var locak = parseFloat(block_rewards);
+                            etcPegToken = locak/1000000000000000000;
+                            etcPegToken = etcPegToken.toFixed(2);
+                            
+                        }
+                        
+                     }
+                   });
                     if (searchToken != '') {
                         if (searchToken == value.hash.toString()) {
                             html += '<tr>'+
@@ -54,7 +80,7 @@ function etcPegToken(api_url, element_id) {
                                     +value.gasUsed+
                                 '</td>'+
                                 '<td class="text-left">'
-                                +getBlock(value.blockNumber)+
+                                +etcPegToken+'ETC'+
                                 '</td>'+
                                 '<td class="text-left">'
                                     +date.toLocaleTimeString()+
@@ -73,7 +99,7 @@ function etcPegToken(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlockNumber(value.blockNumber)+
+                                    +etcPegToken+'ETC'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -99,12 +125,37 @@ function etcPegToken(api_url, element_id) {
 // etc peg roll ups
 function etcPegRollup(api_url, element_id) {
     
+    var blockpeg = 0;
+    
     $.get(api_url,
         function (data) {
             if (data.status) {
                 var html = ''
                 $.each(data.result, function (index, value) {
                     const date = new Date(value.timeStamp * 1000);
+                    
+                    var apiUrl = "https://blockscout.com/etc/mainnet/api?module=block&action=getblockreward&blockno="+value.blockNumber+"";
+                    
+                    blockpeg = 0;
+                    
+                    $.ajax({
+                        url: apiUrl,
+                        type: "GET",
+                        async: false, // set to false so order of operations is correct
+                        data: {block_number : value.number},
+                        success: function(data){
+                        if(data.status){
+                            console.log(data);
+                            var block_rewards = data.result.blockReward
+                
+                            var locak = parseFloat(block_rewards);
+                            blockpeg = locak/1000000000000000000;
+                            blockpeg = blockpeg.toFixed(2);
+                            
+                        }
+                        
+                     }
+                   });
                     if (searchToken != '') {
                         if (searchToken == value.hash.toString()) {
                             html += '<tr>'+
@@ -118,7 +169,7 @@ function etcPegRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getRollupBlockNumber(value.blockNumber)+
+                                    +blockpeg+'ETC'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -137,7 +188,7 @@ function etcPegRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'+
-                                    getRollupBlockNumber(value.blockNumber)+
+                                    blockpeg+'ETC'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -182,8 +233,10 @@ function etcPegLock(api_url, element_id) {
                             console.log(data);
                             var block_rewards = data.result.blockReward
                 
-                            var num = parseFloat(block_rewards);
-                            blockReward = num/1000000000000000000;
+                            var locak = parseFloat(block_rewards);
+                            blockReward = locak/1000000000000000000;
+                            blockReward = blockReward.toFixed(2);
+                            
                         }
                         
                      }
@@ -202,7 +255,7 @@ function etcPegLock(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'+
-                                    getLockBlockNumber(value.blockNumber)+
+                                    blockReward+'ETC'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -221,7 +274,7 @@ function etcPegLock(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'+
-                                    blockReward+
+                                    blockReward+'ETC'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+

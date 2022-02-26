@@ -39,13 +39,33 @@ $('#bnbpeg-lock').click(function () {
 });
 
 function bnbPegToken(api_url, element_id) {
-
+    var bnbpegTok = 0;
     $.get(api_url,
         function (data) {
             if (data.status) {
                 var html = ''
                 $.each(data.result, function (index, value) {
                     const date = new Date(value.timeStamp * 1000);
+                    
+                    var apiUrl = "https://api.bscscan.com/api?module=block&action=getblockreward&blockno="+value.blockNumber+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
+                    bnbpegTok = 0;
+                    
+                    $.ajax({
+                        url: apiUrl,
+                        type: "GET",
+                        async: true, // set to false so order of operations is correct
+                        data: {block_number : value.blockNumber},
+                        success: function(data){
+                        if(data.status){
+                    
+                            var block_rewards = data.result.blockReward
+                
+                            var num = parseFloat(block_rewards);
+                            bnbpegTok =  num/1000000000000000000;
+                            bnbpegTok = bnbpegTok.toFixed(2);
+                        }
+                     }
+                   });
                     if (searchToken != '') {
                         if (searchToken == value.hash.toString()) {
                             html += '<tr>'+
@@ -59,7 +79,7 @@ function bnbPegToken(api_url, element_id) {
                                     +value.gasUsed+
                                 '</td>'+
                                 '<td class="text-left">'
-                                +getBlockPegTokenNumber(value.blockNumber)+
+                                +bnbpegTok+'BNB'+
                                 '</td>'+
                                 '<td class="text-left">'
                                     +date.toLocaleTimeString()+
@@ -78,7 +98,7 @@ function bnbPegToken(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlockPegTokenNumber(value.blockNumber)+
+                                    +bnbpegTok+'BNB'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -103,12 +123,34 @@ function bnbPegToken(api_url, element_id) {
 
 
 function bnbPegRollup(api_url, element_id) {
+    var bnbpegroll = 0;
     $.get(api_url,
         function (data) {
             if (data.status) {
                 var html = ''
                 $.each(data.result, function (index, value) {
                     const date = new Date(value.timeStamp * 1000);
+                    
+                    var apiUrl = "https://api.bscscan.com/api?module=block&action=getblockreward&blockno="+value.blockNumber+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
+                    bnbpegroll = 0;
+                    
+                    $.ajax({
+                        url: apiUrl,
+                        type: "GET",
+                        async: true, // set to false so order of operations is correct
+                        data: {block_number : value.blockNumber},
+                        success: function(data){
+                        if(data.status){
+                    
+                            var block_rewards = data.result.blockReward
+                
+                            var num = parseFloat(block_rewards);
+                            bnbpegroll =  num/1000000000000000000;
+                            bnbpegroll = bnbpegroll.toFixed(2);
+                        }
+                     }
+                   });
+                   
                     if (searchToken != '') {
                         if (searchToken == value.hash.toString()) {
                             html += '<tr>'+
@@ -122,7 +164,7 @@ function bnbPegRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlockPegRollNumber(value.blockNumber)+'BNB'+
+                                    +bnbpegroll+'BNB'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -141,7 +183,7 @@ function bnbPegRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlockPegRollNumber(value.blockNumber)+'BNB'+
+                                    +bnbpegroll+'BNB'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -164,12 +206,32 @@ function bnbPegRollup(api_url, element_id) {
 }
 
 function bnbPegLock(api_url, element_id) {
+    var bnbPegL = 0;
     $.get(api_url,
         function (data) {
             if (data.status) {
                 var html = ''
                 $.each(data.result, function (index, value) {
                     const date = new Date(value.timeStamp * 1000);
+                    var apiUrl = "https://api.bscscan.com/api?module=block&action=getblockreward&blockno="+value.blockNumber+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
+                    bnbPegL = 0;
+                    
+                    $.ajax({
+                        url: apiUrl,
+                        type: "GET",
+                        async: true, // set to false so order of operations is correct
+                        data: {block_number : value.blockNumber},
+                        success: function(data){
+                        if(data.status){
+                            console.log("data"+"block_number"+block_number+" "+data.result.blockReward);
+                            var block_rewards = data.result.blockReward
+                
+                            var num = parseFloat(block_rewards);
+                            bnbPegL =  num/1000000000000000000;
+                            bnbPegL = bnbPegL.toFixed(2);
+                        }
+                     }
+                   });
                     if (searchToken != '') {
                         if (searchToken == value.hash.toString()) {
                             html += '<tr>'+
@@ -183,7 +245,7 @@ function bnbPegLock(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlockPegRollNumber(value.blockNumber)+'BNB'+
+                                    +bnbPegL+'BNB'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -202,7 +264,7 @@ function bnbPegLock(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +getBlockPegRollNumber(value.blockNumber)+'BNB'+
+                                    +bnbPegL+'BNB'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+

@@ -55,6 +55,10 @@ function mainNetToken(api_url, element_id) {
                 
                             var num = parseFloat(block_rewards);
                             blockRewardMainnetToken = num/1000000000000000000;
+                            blockRewardMainnetToken = blockRewardMainnetToken.toFixed(2);
+                            
+                            blockRewardMainnetToken = Math.round(blockRewardMainnetToken * 10) / 10
+                            
                         }
                      }
                    });
@@ -72,7 +76,7 @@ function mainNetToken(api_url, element_id) {
                                     +value.gasUsed+
                                 '</td>'+
                                 '<td class="text-left">'
-                                    +blockRewardMainnetToken+
+                                    +blockRewardMainnetToken+'ETH'+
                                 '</td>'+
                                 '<td class="text-left">'
                                     +date.toLocaleTimeString()+
@@ -91,7 +95,7 @@ function mainNetToken(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +blockRewardMainnetToken+
+                                    +blockRewardMainnetToken+'ETH'+
                                     '</td>'+
                                     '<td class="text-left block-reward">'
                                         +date.toLocaleTimeString()+
@@ -139,6 +143,9 @@ function mainNetRollup(api_url, element_id) {
                 
                             var num = parseFloat(block_rewards);
                             blockRewardMainnetRollup = num/1000000000000000000;
+                            blockRewardMainnetRollup = blockRewardMainnetRollup.toFixed(2);
+                            
+                            blockRewardMainnetRollup = Math.round(blockRewardMainnetRollup * 10) / 10
                         }
                      }
                    });
@@ -155,7 +162,7 @@ function mainNetRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +blockRewardMainnetRollup+
+                                    +blockRewardMainnetRollup+'ETH'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+
@@ -174,7 +181,7 @@ function mainNetRollup(api_url, element_id) {
                                         +value.gasUsed+
                                     '</td>'+
                                     '<td class="text-left">'
-                                    +blockRewardMainnetRollup+
+                                    +blockRewardMainnetRollup+'ETH'+
                                     '</td>'+
                                     '<td class="text-left">'
                                         +date.toLocaleTimeString()+

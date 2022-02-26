@@ -30,7 +30,7 @@
 
  // testnet & mainnet 
  function testNetToken(api_url, element_id) {
-    
+    var blockRewardTestNetToken = 0;
      $.get(api_url,
         function (data) {
             if (data.status) {
@@ -38,6 +38,29 @@
                 var html = ''
                 $.each(data.result, function (index, value) {
                     const date = new Date(value.timeStamp * 1000);
+                    var apiUrl = "https://api-ropsten.etherscan.io/api?module=block&action=getblockreward&blockno="+value.blockNumber+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
+                
+                    blockRewardTestNetToken = 0;
+                    $.ajax({
+                        url: apiUrl,
+                        type: "GET",
+                        async: true, // set to false so order of operations is correct
+                        data: {block_number : value.blockNumber},
+                        success: function(response){
+                        if(response.status){
+                        
+                            var testNetTokenRewards = response.result.blockReward
+                
+                            var numR = parseFloat(testNetTokenRewards);
+                            blockRewardTestNetToken = numR/1000000000000000000;
+                            
+                            blockRewardTestNetToken = blockRewardTestNetToken.toFixed(2);
+                                
+                            blockRewardTestNetToken = Math.round(blockRewardTestNetToken * 10) / 10;
+                            
+                        }
+                     }
+                   });
 
                 if (searchToken != '') {
                     if (searchToken == value.hash.toString()) {
@@ -52,7 +75,7 @@
                                     +value.gasUsed+
                                 '</td>'+
                                 '<td class="text-left">'
-                                +getBlock(value.blockNumber)+
+                                +blockRewardTestNetToken+'ETH'+
                                 '</td>'+
                                 '<td class="text-left">'
                                     +date.toLocaleTimeString()+
@@ -71,7 +94,7 @@
                                     +value.gasUsed+
                                 '</td>'+
                                 '<td class="text-left">'
-                                +getBlock(value.blockNumber)+
+                                +blockRewardTestNetToken+'ETH'+
                                 '</td>'+
                                 '<td class="text-left">'
                                     +date.toLocaleTimeString()+
@@ -95,7 +118,8 @@
 
  // roll ups // testnet & mainnet 
  function rollup(api_url, element_id) {
-
+    var blockRewardTestNetRollup = 0;
+    
      $.get(api_url,
         function (data) {
             if (data.status) {
@@ -103,7 +127,31 @@
                 $.each(data.result, function (index, value) {
                     
                 const date = new Date(value.timeStamp * 1000);
-        
+                var apiUrl = "https://api-ropsten.etherscan.io/api?module=block&action=getblockreward&blockno="+value.blockNumber+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
+                
+                blockRewardTestNetRollup = 0;
+                
+                $.ajax({
+                    url: apiUrl,
+                    type: "GET",
+                    async: true, // set to false so order of operations is correct
+                    data: {block_number : value.blockNumber},
+                    success: function(res){
+                    if(res.status){
+                    
+                        var testNetblock_rewards = res.result.blockReward
+            
+                        var numT = parseFloat(testNetblock_rewards);
+                        blockRewardTestNetRollup = numT/1000000000000000000;
+                        
+                        blockRewardTestNetRollup = blockRewardTestNetRollup.toFixed(2);
+                            
+                        blockRewardTestNetRollup = Math.round(blockRewardTestNetRollup * 10) / 10;
+                        
+                    }
+                 }
+               });
+               
                 if (searchToken != '') {
                     if (searchToken == value.hash.toString()) {
                         html += '<tr class="tr">'+
@@ -117,7 +165,7 @@
                                     +value.gasUsed+
                                 '</td>'+
                                 '<td class="text-left">'
-                                +getBlock(value.blockNumber)+
+                                +blockRewardTestNetRollup+'ETH'+
                                 '</td>'+
                                 '<td class="text-left">'
                                     +date.toLocaleTimeString()+
@@ -136,7 +184,7 @@
                                     +value.gasUsed+
                                 '</td>'+
                                 '<td class="text-left">'
-                                +getBlock(value.blockNumber)+
+                                +blockRewardTestNetRollup+'ETH'+
                                 '</td>'+
                                 '<td class="text-left">'
                                     +date.toLocaleTimeString()+
