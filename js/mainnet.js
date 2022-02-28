@@ -29,15 +29,13 @@ $('#mainnet-rollup').click(function () {
 // mainnet 
 function mainNetToken(api_url, element_id) {
     var blockRewardMainnetToken = 0;
-    console.log('Search Term', searchToken);
     
     $.get(api_url,
         function (data) {
             if (data.status) {
 
                 var html = ''
-                var block_rewards = 0;
-                console.log(block_rewards);
+                
                 $.each(data.result, function (index, value) {
                     const date = new Date(value.timeStamp * 1000);
                     var apiUrl = "https://api.etherscan.io/api?module=block&action=getblockreward&blockno="+value.blockNumber+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
