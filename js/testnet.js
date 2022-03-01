@@ -44,7 +44,7 @@
                     $.ajax({
                         url: apiUrl,
                         type: "GET",
-                        async: true, // set to false so order of operations is correct
+                        async: false, // set to false so order of operations is correct
                         data: {block_number : value.blockNumber},
                         success: function(response){
                         if(response.status){
@@ -134,7 +134,7 @@
                 $.ajax({
                     url: apiUrl,
                     type: "GET",
-                    async: true, // set to false so order of operations is correct
+                    async: false, // set to false so order of operations is correct
                     data: {block_number : value.blockNumber},
                     success: function(res){
                     if(res.status){
@@ -217,7 +217,7 @@
         $.ajax({
             url: apiUrl,
             type: "GET",
-            async: true, // set to false so order of operations is correct
+            async: false, // set to false so order of operations is correct
             data: {block_number : block_number},
             success: function(data){
             if(data.status){
