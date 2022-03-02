@@ -40,25 +40,25 @@ function mainNetToken(api_url, element_id) {
                     const date = new Date(value.timeStamp * 1000);
                     var apiUrl = "https://api.etherscan.io/api?module=block&action=getblockreward&blockno="+value.blockNumber+"&apikey=9439IK1Y6D6UZFBN298YATMAAAXD3XSIVS";
                     blockRewardMainnetToken = 0;
+
+                        $.ajax({
+                            url: apiUrl,
+                            type: "GET",
+                            async: false, // set to false so order of operations is correct
+                            data: {block_number : value.blockNumber},
+                            success: function(data){
+                            if(data.status){
+                                
+                                var block_rewards = data.result.blockReward;
                     
-                    $.ajax({
-                        url: apiUrl,
-                        type: "GET",
-                        async: false, // set to false so order of operations is correct
-                        data: {block_number : value.blockNumber},
-                        success: function(data){
-                        if(data.status){
-                            
-                            var block_rewards = data.result.blockReward
-                
-                            var num = parseFloat(block_rewards);
-                            blockRewardMainnetToken = num/1000000000000000000;
-                            blockRewardMainnetToken = blockRewardMainnetToken.toFixed(2);
-                            
-                            blockRewardMainnetToken = Math.round(blockRewardMainnetToken * 10) / 10
-                            
+                                var num = parseFloat(block_rewards);
+                                blockRewardMainnetToken = num/1000000000000000000;
+                                blockRewardMainnetToken = blockRewardMainnetToken.toFixed(2);
+                                
+                                blockRewardMainnetToken = Math.round(blockRewardMainnetToken * 10) / 10;
+                                // $('#' +  value.blockNumber).html(blockRewardMainnetToken + 'ETH');
+                            }
                         }
-                     }
                    });
                     if (searchToken != '') {
                         if (searchToken == value.hash.toString()) {
@@ -73,7 +73,7 @@ function mainNetToken(api_url, element_id) {
                                 '<td class="text-left">'
                                     +value.gasUsed+
                                 '</td>'+
-                                '<td class="text-left">'
+                                '<td class="text-left" id="' + value.blockNumber + '">'
                                     +blockRewardMainnetToken+'ETH'+
                                 '</td>'+
                                 '<td class="text-left">'
@@ -92,7 +92,7 @@ function mainNetToken(api_url, element_id) {
                                     '<td class="text-left">'
                                         +value.gasUsed+
                                     '</td>'+
-                                    '<td class="text-left">'
+                                    '<td class="text-left" id="' + value.blockNumber + '">'
                                     +blockRewardMainnetToken+'ETH'+
                                     '</td>'+
                                     '<td class="text-left block-reward">'
